@@ -1,0 +1,31 @@
+# Specter Policy Configuration
+# Docs: https://spectreanalysis.site/docs/policies
+version: "1"
+
+policies:
+  - name: High AI Content Warning
+    priority: 1
+    enabled: true
+    triggers:
+      - ai_percentage > 60
+    actions:
+      - comment
+      - add_labels:ai-heavy
+
+  - name: Security Path Review
+    priority: 10
+    enabled: true
+    triggers:
+      - paths: src/auth/**, src/crypto/**
+    actions:
+      - require_reviewers:security
+      - status_check:failure
+
+  - name: Block Near-Total AI PRs
+    priority: 20
+    enabled: true
+    triggers:
+      - ai_percentage >= 95
+    actions:
+      - status_check:failure
+      - comment
