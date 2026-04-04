@@ -10,6 +10,5 @@ def insertion_sort(arr):
 
 
 if __name__ == "__main__":
-    numbers = [64, 34, 25, 12, 22, 11, 90]
-    print("Original:", numbers)
-    print("Sorted:  ", insertion_sort(numbers))
+
+
