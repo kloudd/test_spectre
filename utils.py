@@ -68,10 +68,12 @@ def moving_average(data: List[float], window: int) -> List[float]:
     Returns:
         List of moving average values
     """
+    if not data:
+        return []
     if window <= 0:
         raise ValueError("Window size must be positive")
     if window > len(data):
-        return [sum(data) / len(data)] if data else []
+        return [sum(data) / len(data)]
 
     result = []
     window_sum = sum(data[:window])
@@ -82,6 +84,18 @@ def moving_average(data: List[float], window: int) -> List[float]:
         result.append(window_sum / window)
 
     return result
+
+
+def exponential_moving_average(data: List[float], alpha: float = 0.3) -> List[float]:
+    """Calculate exponential moving average with smoothing factor alpha."""
+    if not data:
+        return []
+    if not 0 < alpha <= 1:
+        raise ValueError("Alpha must be in (0, 1]")
+    ema = [data[0]]
+    for val in data[1:]:
+        ema.append(alpha * val + (1 - alpha) * ema[-1])
+    return ema
 
 
 def percentile(data: List[float], p: float) -> float:
@@ -109,6 +123,34 @@ def percentile(data: List[float], p: float) -> float:
         return sorted_data[int(k)]
 
     return sorted_data[f] * (c - k) + sorted_data[c] * (k - f)
+
+
+def median(data: List[float]) -> float:
+    """
+    Calculate the median of a dataset.
+
+    For an odd-length list the middle value is returned.
+    For an even-length list the average of the two middle values is returned.
+
+    Args:
+        data: List of numerical values
+
+    Returns:
+        The median value
+
+    Raises:
+        ValueError: If the dataset is empty
+    """
+    if not data:
+        raise ValueError("Cannot calculate median of empty dataset")
+
+    sorted_data = sorted(data)
+    n = len(sorted_data)
+    mid = n // 2
+
+    if n % 2 == 1:
+        return sorted_data[mid]
+    return (sorted_data[mid - 1] + sorted_data[mid]) / 2
 
 
 def compose(*functions: Callable) -> Callable:

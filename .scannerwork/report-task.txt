@@ -1,0 +1,6 @@
+projectKey=kloudd_test_spectre
+serverUrl=http://localhost:9000
+serverVersion=10.7.0.96327
+dashboardUrl=http://localhost:9000/dashboard?id=kloudd_test_spectre
+ceTaskId=8d693e32-ae85-46d2-af62-bd2fe2b277b1
+ceTaskUrl=http://localhost:9000/api/ce/task?id=8d693e32-ae85-46d2-af62-bd2fe2b277b1

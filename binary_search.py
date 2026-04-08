@@ -80,13 +80,15 @@ def binary_search(
         >>> result.index
         2
     """
-    if not isinstance(arr, list):
+    if not isinstance(arr, (list, tuple)):
         return BinarySearchResult(
             status=SearchResult.INVALID_INPUT,
             index=-1,
             comparisons=0,
             target=target
         )
+    if isinstance(arr, tuple):
+        arr = list(arr)
 
     if len(arr) == 0:
         return BinarySearchResult(
@@ -157,6 +159,14 @@ def binary_search_recursive(
     Returns:
         BinarySearchResult: Search result with status and metadata
     """
+    if not arr:
+        return BinarySearchResult(
+            status=SearchResult.NOT_FOUND,
+            index=-1,
+            comparisons=0,
+            target=target
+        )
+
     if high is None:
         high = len(arr) - 1
 
